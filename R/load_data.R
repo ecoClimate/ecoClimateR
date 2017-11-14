@@ -6,6 +6,8 @@ library(raster)
 #' 
 #' download the ecoClimate layers
 #' 
+#' @usage pbdb_temporal_resolution
+#' 
 #' @param AOGCM Select the AOGCM.
 #' Options are: "CCSM", "CNRM", "MIROC", "COSMOS", "FGOALS", "GISS", "IPSL","MRI", "MPI"
 #' @param Baseline Select a baseline for the climatic layers.
@@ -13,30 +15,34 @@ library(raster)
 #' @param Scenario Select a temporal scenario. 
 #' Options are: "LGM" (21,000 years ago), "Holo" (6,000 years ago), 
 #' "Present", "Future 2.6" (rcp 2.6), "Future 4.5" (rcp 4.5), "Future 6" (rcp 6), "Future 8.5" (rcp 8.5)
-#'    
+#' @export 
+#' @examples \dontrun{
+#' CCSM_mod_present<- ecoclimate_getdata ("CCSM", "Modern", "Present")
+#' }
 #' 
 
 ecoClimate_getdata<- function (AOGCM, Baseline, Scenario){
-
-if (!(AOGCM %in% c("CCSM", "CNRM", "MIROC", "COSMOS", "FGOALS", "GISS", "IPSL","MRI", "MPI"))){
- stop (paste ("ecoClimate has no data for AOGCM=", AOGCM, ". Check the spelling", sep=""))
-}
-
-if (!(Baseline %in% c("Pre-industrial", "Historical","Modern"))){
- stop (paste ("ecoClimate has no data for Baseline=", Baseline, ". Check the spelling", sep=""))
-}
   
-if (!(Scenario %in% c("LGM", "Holo", "Present", "Future 2.6", "Future 4.5", "Future 6", "Future 8.5"))){
- stop (paste ("ecoClimate has no data for Scenario=", Scenario, ". Check the spelling", sep=""))
-}
+  if (!(AOGCM %in% c("CCSM", "CNRM", "MIROC", "COSMOS", "FGOALS", "GISS", "IPSL","MRI", "MPI"))){
+    stop (paste ("ecoClimate has no data for AOGCM=", AOGCM, ". Check the spelling", sep=""))
+  }
   
+  if (!(Baseline %in% c("Pre-industrial", "Historical","Modern"))){
+    stop (paste ("ecoClimate has no data for Baseline=", Baseline, ". Check the spelling", sep=""))
+  }
   
-if (AOGCM== "CCSM" &&  Baseline == "Modern" && Scenario=="Present"){
-FinURL <- paste ("https://www.dropbox.com/sh/ntl1ieo3fb5q2g9/AAByugxGAwEvuNxCMsj7gfI2a/bio%20%23%20CCSM_Modern%281950-1999%29.txt?dl=1") 
-}  
+  if (!(Scenario %in% c("LGM", "Holo", "Present", "Future 2.6", "Future 4.5", "Future 6", "Future 8.5"))){
+    stop (paste ("ecoClimate has no data for Scenario=", Scenario, ". Check the spelling", sep=""))
+  }
+  
+  if (AOGCM== "CCSM" &&  Baseline == "Modern" && Scenario=="Present"){
+    FinURL <- paste ("https://www.dropbox.com/sh/ntl1ieo3fb5q2g9/AAByugxGAwEvuNxCMsj7gfI2a/bio%20%23%20CCSM_Modern%281950-1999%29.txt?dl=1") 
+  }  
+  
   if (AOGCM== "CNRM" &&  Baseline == "Modern" && Scenario=="Present"){
     FinURL <- paste ("https://www.dropbox.com/sh/ntl1ieo3fb5q2g9/AAB7ltZRxzYkjv6gZ4QNVWBka/bio%20%23%20CNRM_Modern%281950-1999%29.txt?dl=1") 
   }  
+  
   if (AOGCM== "MIROC" &&  Baseline == "Modern" && Scenario=="Present"){
     FinURL <- paste ("https://www.dropbox.com/sh/ntl1ieo3fb5q2g9/AAA4zPbhp-TMN8ohv6plWoFha/bio%20%23%20MIROC_Modern%281950-1999%29.txt?dl=1") 
   }  
@@ -60,7 +66,8 @@ FinURL <- paste ("https://www.dropbox.com/sh/ntl1ieo3fb5q2g9/AAByugxGAwEvuNxCMsj
   if (AOGCM== "MPI" &&  Baseline == "Modern" && Scenario=="Present"){
     FinURL <- paste ("https://www.dropbox.com/sh/ntl1ieo3fb5q2g9/AADlJ8v41rP0Nd65PMCeCIxFa/bio%20%23%20MPI_Modern%281950-1999%29.txt?dl=1") 
   }  
-## LGM
+  
+  ## LGM
   if (AOGCM== "CCSM" &&  Baseline == "Modern" && Scenario=="LGM"){
     FinURL <- paste ("https://www.dropbox.com/sh/kijh17ehg8v3uv8/AADWJOs0_8zQmhc0XJxJE9a2a/bio%20%23baseline_Modern%281950-1999%29%23%20CCSM_LGM%2821ka%29.txt?dl=1") 
   }  
@@ -92,8 +99,8 @@ FinURL <- paste ("https://www.dropbox.com/sh/ntl1ieo3fb5q2g9/AAByugxGAwEvuNxCMsj
   }  
   
   
-## Holocene
- 
+  ## Holocene
+  
   if (AOGCM== "CCSM" &&  Baseline == "Modern" && Scenario=="Holo"){
     FinURL <- paste ("https://www.dropbox.com/sh/kijh17ehg8v3uv8/AADh9RT99OC7J5wfJojxiJGQa/bio%20%23baseline_Modern%281950-1999%29%23%20CCSM_mHol%286ka%29.txt?dl=1") 
   }  
@@ -189,7 +196,7 @@ FinURL <- paste ("https://www.dropbox.com/sh/ntl1ieo3fb5q2g9/AAByugxGAwEvuNxCMsj
     stop (paste ("ecoClimate has no data for AOGCM=", AOGCM,"Baseline= ", Baseline, "Scenario=", Scenario, sep=" "))
   }
   
-
+  
   ## FUTURE 4.5
   if (AOGCM== "CCSM" &&  Baseline == "Modern" && Scenario=="Future 4.5"){
     FinURL <- paste ("https://www.dropbox.com/sh/ei6m84sctoinhi9/AADV5Qf8D7wgWSMuL30I-XQBa/bio%20%23baseline_Modern%281950-1999%29%23%20CCSM_rcp45%282080-2100%29.txt?dl=1") 
@@ -253,10 +260,10 @@ FinURL <- paste ("https://www.dropbox.com/sh/ntl1ieo3fb5q2g9/AAByugxGAwEvuNxCMsj
     stop (paste ("ecoClimate has no data for AOGCM=", AOGCM,"Baseline= ", Baseline, "Scenario=", Scenario, sep=" "))
   }
   
-# Download data
-climate_data <- repmis::source_data(FinURL, header = TRUE)
-gridded(climate_data) <- ~long+lat
-map_climate<- stack(climate_data)[[-1]]
-return (map_climate)
+  # Download data
+  climate_data <- repmis::source_data(FinURL, header = TRUE)
+  gridded(climate_data) <- ~long+lat
+  map_climate<- stack(climate_data)[[-1]]
+  return (map_climate)
 }
 
