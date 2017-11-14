@@ -4,9 +4,9 @@ library(raster)
 
 #' ecoClimate_getdata
 #' 
-#' download the ecoClimate layers
+#' download ecoClimate layers. more info at www.ecoclimate.org
 #' 
-#' @usage pbdb_temporal_resolution
+#' @usage ecoClimate_getdata (AOGCM, Baseline, Scenario)
 #' 
 #' @param AOGCM Select the AOGCM.
 #' Options are: "CCSM", "CNRM", "MIROC", "COSMOS", "FGOALS", "GISS", "IPSL","MRI", "MPI"
@@ -18,6 +18,8 @@ library(raster)
 #' @export 
 #' @examples \dontrun{
 #' CCSM_mod_present<- ecoclimate_getdata ("CCSM", "Modern", "Present")
+#' dev.new()
+#' plot (CCSM_mod_present)
 #' }
 #' 
 
@@ -265,5 +267,31 @@ ecoClimate_getdata<- function (AOGCM, Baseline, Scenario){
   gridded(climate_data) <- ~long+lat
   map_climate<- stack(climate_data)[[-1]]
   return (map_climate)
+}
+
+
+#' ecoClimate_select
+#' 
+#' select which bioclimatic variables and set the extent you want (crop the raster stack to your study extent)
+#' 
+#' @usage ecoClimate_select (map_climate, Sels=c(1:19), extent=c(-180, 180, -90, 90))
+#' 
+#' @param map_climate raster stack with all the variables
+#' @param Sels vector of integer numbers. 1 for bio1, 2 for bio2, etc. e.g. Sels= c(1,12,6) for selecting bio1, bio12 and bio6
+#' @param extent vector. xmin, xmax, ymin, ymax. e.g. c()
+#' @export 
+#' @examples \dontrun{
+#' CCSM_mod_present<- ecoclimate_getdata ("CCSM", "Modern", "Present")
+#' Europe_CCSM_m_p_bio1_12<- ecoClimate_select (CCSM_mod_present, c(1,12), extent=c(-20, 80, 20, 80))
+#' dev.new()
+#' plot (Europe_CCSM_m_p_bio1_12)
+#' }
+#' 
+#' 
+
+ecoClimate_select<- function (map_climate, Sels=c(1:19), extent=c(-180, 180, -90, 90)){
+select_var<- map_climate [[Sels]] 
+crop_stack<- crop (select_var, extent)
+return (crop_stack)
 }
 
